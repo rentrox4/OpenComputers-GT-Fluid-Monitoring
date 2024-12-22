@@ -501,7 +501,8 @@ FLUID_COLORS = {
     ["Radon"] = 0xbc3dbc,
 
     ["Water"] = 0x212fb4,
-    ["Benzene"] = 0x4f4f4f  -- default: 0x0f0f0f, too dark
+    ["Benzene"] = 0x4f4f4f,  -- default: 0x0f0f0f, too dark
+    ["Nitrobenzene"] = 0x634d43 -- default: 0x2a1e18,  too dark
     }
 
 local tank_addresses = get_tank_addresses()
