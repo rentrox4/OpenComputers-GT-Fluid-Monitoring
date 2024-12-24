@@ -1,5 +1,3 @@
--- [FIXED] Program crashes on world reload due ME system with OC P2P booting
-
 component = require("component")
 gpu = component.gpu
 
@@ -481,6 +479,33 @@ function draw_fluid_status_window(tank_address, x, y, width, height, forced_flui
 
         -- Lower frame
         gpu.set(dx_L, dy, string.rep(DRAW_FRAME and "─" or " ", dx_R - dx_L))
+
+    -- Experimental EU/t calculation. It's displayed on the left side of
+    -- the progress bar and is aware of the background. Benzene only.
+    -- May not display correctly with shaders as it uses the background color.
+    if formatted.fluid_name == "Benzene" and SHOW_BENZENE_EU_T then
+        local eu_t = raw.fluid_flow*360
+        eu_t = math.floor(eu_t)
+        eu_t = set_explicit_sign(eu_t)
+        eu_t = add_commas_to_number(eu_t)
+        eu_t = tostring(eu_t) .. " EU/t"
+        
+        -- Character iteration
+        for i = 1, #eu_t do
+            local char = string.sub(eu_t, i, i)
+            if gpu.get(x + 1 + i, y + 1) == "█" then
+                gpu.setForeground(0x101010)
+                gpu.setBackground(FLUID_COLORS[formatted.fluid_name])
+                gpu.set(x + 1 + i, y + 1, char)
+            else
+                gpu.setForeground(FLUID_COLORS[formatted.fluid_name])
+                gpu.setBackground(0x101010)
+                gpu.set(x + 1 + i, y + 1, char)
+            end
+        end
+        gpu.setForeground(DEFAULT_COLOR)
+        gpu.setBackground(0x000000)
+    end
 end
 
 
@@ -488,6 +513,7 @@ DEQUE_MAX_SIZE = 10
 UPDATE_DELAY_IN_SEC = 6
 
 DRAW_FRAME = true
+SHOW_BENZENE_EU_T = false
 DEFAULT_COLOR = 0x777777
 FLUID_COLORS = {
     ["Hydrogen Gas"] = 0xbd4b4b,
@@ -502,7 +528,7 @@ FLUID_COLORS = {
 
     ["Water"] = 0x212fb4,
     ["Benzene"] = 0x4f4f4f,  -- default: 0x0f0f0f, too dark
-    ["Nitrobenzene"] = 0x634d43  -- default: 0x2a1e18,  too dark
+    ["Nitrobenzene"] = 0x634d43  -- default: 0x2a1e18, too dark
     }
 
 local tank_addresses = get_tank_addresses()
