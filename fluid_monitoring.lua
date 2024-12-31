@@ -1,4 +1,5 @@
 component = require("component")
+computer = require("computer")
 gpu = component.gpu
 
 
@@ -146,7 +147,7 @@ function get_fluid_values(tank_address)
             is_no_error, tank_scanner_data = pcall(component.invoke, tank_address, "getSensorInformation")
         end
 
-        local ticks_stamp = os.time()*(1000/60/60)
+        local ticks_stamp = computer.uptime()*20
 
         return tank_scanner_data, ticks_stamp
     end
