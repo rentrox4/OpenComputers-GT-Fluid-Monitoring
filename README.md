@@ -9,9 +9,8 @@ Setup example:
 
 ![изображение](https://github.com/user-attachments/assets/63fd08d6-1e76-4cf1-8d83-a7ac04a7fe8e)
 
-Important notes:
-- When the tank Overflow Voiding Mode is enabled, the fluid capacity is shown as 2,147,483,648. To avoid this, use an Overflow Valve cover with the overflow point slightly below the tank capacity;
-- Sleeping or other world time changes may affect the forecasted values. Wait 1 minute for the values to return to normal.
+Important note:
+- When the tank Overflow Voiding Mode is enabled, the fluid capacity is shown as 2,147,483,648. To avoid this, use an Overflow Valve cover with the overflow point slightly below the tank capacity.
 
 Don't forget that you can:
 - Use AE2 P2P to transfer the OpenComputers signal;
